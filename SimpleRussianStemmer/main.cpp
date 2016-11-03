@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -15,14 +15,14 @@
 
 	stemming::russian_stem<> stemRussian;
 
-	boost::regex WRONG_NAMES("[^a-zà-ÿ¸0-9._-]", boost::regex::icase);
-	boost::regex WRONG_ENDINGS("(îñò(ü)?)", boost::regex::icase);
+	boost::regex WRONG_NAMES("[^a-zÐ°-ÑÑ‘0-9._-]", boost::regex::icase);
+	boost::regex WRONG_ENDINGS("(Ð¾ÑÑ‚(ÑŒ)?)", boost::regex::icase);
 
 void stemRussianWord(std::string& word){
 
 	std::wstring wStem;
 
-	wchar_t* UnicodeTextBuffer = new wchar_t[word.length()+1];             //ïðîãíàòü ÷åðåç ñòåììåð
+	wchar_t* UnicodeTextBuffer = new wchar_t[word.length()+1];             //Ð¿Ñ€Ð¾Ð³Ð½Ð°Ñ‚ÑŒ Ñ‡ÐµÑ€ÐµÐ· ÑÑ‚ÐµÐ¼Ð¼ÐµÑ€
     std::wmemset(UnicodeTextBuffer, 0, word.length()+1);
     std::mbstowcs(UnicodeTextBuffer, word.c_str(), word.length());
     wStem = UnicodeTextBuffer;		
@@ -31,9 +31,10 @@ void stemRussianWord(std::string& word){
 	word = word.substr(0, wStem.length());
 
 	delete[] UnicodeTextBuffer; 
+
 }
 
-const char* wordsExceptions[] = {"êàíàë", "ýêðàí"};
+const char* wordsExceptions[] = {"ÐºÐ°Ð½Ð°Ð»", "ÑÐºÑ€Ð°Ð½"};
 
 
 
@@ -46,12 +47,12 @@ int main(int argc, char **argv) {
 	if(argc > 1) filename = argv[1];
 	else { 
 	//------------------------------------------------MENU MODULE---------------------------------------------------
-        std::cout << "\nÂâåäèòå èìÿ ôàéëà âõîäíîãî òåêñòà (íàïðèìåð \"name.txt\"),\n's' - ïðîïóñòèòü èëè 'q' - âûõîä:\n";	
+        std::cout << "\nÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð²Ñ…Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð° (Ð½Ð°Ð¿Ñ€Ð¸Ð¼ÐµÑ€ \"name.txt\"),\n's' - Ð¿Ñ€Ð¾Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ Ð¸Ð»Ð¸ 'q' - Ð²Ñ‹Ñ…Ð¾Ð´:\n";	
 	 
 	    while(1){		
 			std::cin >> filename;		
 			if(!boost::regex_search(filename, WRONG_NAMES)) break;		
-			else { system("cls"); std::cout << "\nÈìÿ ôàéëà äîëæíî ñîñòîÿòü òîëüêî èç ñòðî÷íûõ èëè çàãëàâíûõ áóêâ èëè öèôð.\n Ïîæàëóéñòà ââåäèòå çàíîâî.\n"; }
+			else { system("cls"); std::cout << "\nÐ˜Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð´Ð¾Ð»Ð¶Ð½Ð¾ ÑÐ¾ÑÑ‚Ð¾ÑÑ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¸Ð· ÑÑ‚Ñ€Ð¾Ñ‡Ð½Ñ‹Ñ… Ð¸Ð»Ð¸ Ð·Ð°Ð³Ð»Ð°Ð²Ð½Ñ‹Ñ… Ð±ÑƒÐºÐ² Ð¸Ð»Ð¸ Ñ†Ð¸Ñ„Ñ€.\n ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð° Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð°Ð½Ð¾Ð²Ð¾.\n"; }
 		}
 
 		if(filename == "s" || filename == "S") strIn = "1.txt";
@@ -77,12 +78,12 @@ int main(int argc, char **argv) {
 
 			//std::cout << "Inside(): " << strTemp << "   len: " << len << "   c: " << c << "    i: " << i << "   vsize: " << vSplit.size() << "\n"; system("pause"); 
 
-			for(std::string::iterator it = strTemp.begin();  it != strTemp.end(); ++it) if(*it == '¸') *it = 'å';   // Çàìåíÿåì ¸ íà å
+			for(std::string::iterator it = strTemp.begin();  it != strTemp.end(); ++it) if(*it == 'Ñ‘') *it = 'Ðµ';   // Ð—Ð°Ð¼ÐµÐ½ÑÐµÐ¼ Ñ‘ Ð½Ð° Ðµ
 
-			for(size_t i=0; i<2; ++i)                                                                               // Íå òðîãàåì ñëîâà èç ìàññèâà èñêëþ÷åíèé
+			for(size_t i=0; i<2; ++i)                                                                               // ÐÐµ Ñ‚Ñ€Ð¾Ð³Ð°ÐµÐ¼ ÑÐ»Ð¾Ð²Ð° Ð¸Ð· Ð¼Ð°ÑÑÐ¸Ð²Ð° Ð¸ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ð¹
 				if(strTemp.c_str() == wordsExceptions[i]) continue;      
 				
-	        if(strTemp[0] == '(' && strTemp.back() == ')') {       // Îáðàáîòêà (êàâû÷åê)
+	        if(strTemp[0] == '(' && strTemp.back() == ')') {       // ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° (ÐºÐ°Ð²Ñ‹Ñ‡ÐµÐº)
 				strTemp = strTemp.substr(1);
 			    strTemp = strTemp.substr(0, len-2);			    
 				stemRussianWord(strTemp); 
@@ -90,7 +91,7 @@ int main(int argc, char **argv) {
 				else fout << "(" << strTemp << ")\n"; 	continue;
 			}
 
-			if(strTemp.at(0) != '(' && strTemp.back() == ')') {       // Îáðàáîòêà êàâû÷åê)
+			if(strTemp.at(0) != '(' && strTemp.back() == ')') {       // ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° ÐºÐ°Ð²Ñ‹Ñ‡ÐµÐº)
 			    strTemp = strTemp.substr(0, len-2);
 			    stemRussianWord(strTemp); 
 				if(i != vSplit.size()-1) fout << strTemp << ") ";
@@ -105,7 +106,7 @@ int main(int argc, char **argv) {
 				else fout << strTemp << c << "\n";  continue;
 			}			
 			
-			stemRussianWord(strTemp);      //Ïðîãîí ÷åðåç ñòåììåð    	
+			stemRussianWord(strTemp);      //ÐŸÑ€Ð¾Ð³Ð¾Ð½ Ñ‡ÐµÑ€ÐµÐ· ÑÑ‚ÐµÐ¼Ð¼ÐµÑ€    	
 
 			if(i != vSplit.size()-1) fout << strTemp << " ";
 			else fout << strTemp << "\n";			
