@@ -116,5 +116,5 @@ int main(int argc, char **argv) {
     } //while
 
 	fin.close(); fout.close();
-	system("pause"); return 0;
+	return 0;
 }
